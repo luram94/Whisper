@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,Response
 from werkzeug.utils import secure_filename
 from ASRTranscriber import ASRTranscriber  # Asegúrate de que ASRTranscriber esté en el path o definido en el mismo archivo
 from time import time
@@ -48,7 +48,8 @@ def transcribe_audio():
             # Leer y devolver la transcripción
             with open(output_path, 'r', encoding='utf-8') as f:
                 transcription = f.read()
-            return jsonify({"filename": filename, "transcription": transcription})
+            #return jsonify({"filename": filename, "transcription": transcription})
+            return Response(transcription, mimetype='text/plain')
 
         except Exception as e:
             return jsonify({"error": str(e)}), 500
